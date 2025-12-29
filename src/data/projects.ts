@@ -4,12 +4,11 @@ export interface Project {
   tagline: string;
   description: string;
   problem: string;
-  solution: string;
-  differentiator: string;
+  approach: string;
+  limitations: string;
   techStack: string[];
   liveUrl?: string;
   githubUrl: string;
-  highlights: string[];
   status: 'live' | 'beta' | 'development';
 }
 
@@ -17,58 +16,40 @@ export const projects: Project[] = [
   {
     id: 'forgebreaker',
     name: 'ForgeBreaker',
-    tagline: 'MTG Arena deck analysis with trust and explainability',
-    description: 'A Magic: The Gathering Arena deck analysis tool built on principles of trust, legality, and explainability. Designed for real player value without compromising game integrity.',
-    problem: 'MTG Arena players need deck insights, but most tools either violate ToS, provide opaque recommendations, or prioritize engagement over actual improvement.',
-    solution: 'ForgeBreaker analyzes publicly available data through legitimate channels, providing transparent reasoning for every recommendation. No black boxes, no ToS violations.',
-    differentiator: 'Every recommendation comes with clear reasoning. The system explicitly states its confidence levels and explains when it doesn\'t have enough data—because honest uncertainty beats false confidence.',
-    techStack: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'Railway'],
+    tagline: 'Deck analysis for MTG Arena',
+    description: 'A tool for looking at Magic: The Gathering Arena decks. It pulls publicly available card and deck data and tries to surface useful patterns without pretending to know more than it does.',
+    problem: 'I wanted a way to analyze decks without using tools that scrape private data or violate the game\'s terms of service. Most existing tools are either shady about where their data comes from or they present guesses as facts.',
+    approach: 'ForgeBreaker only uses public data. When it shows you something, it tells you where that information came from. If it doesn\'t have enough data to say something useful, it says so instead of making something up.',
+    limitations: 'This is a side project, not a production service. The data updates when I run the scraper. It doesn\'t predict wins or tell you what deck to play—it just shows you what\'s in the data.',
+    techStack: ['Python', 'FastAPI', 'React', 'PostgreSQL'],
     liveUrl: 'https://frontend-production-57a1.up.railway.app/',
     githubUrl: 'https://github.com/RogersJohn/ForgeBreaker',
-    highlights: [
-      'Fully ToS-compliant data collection',
-      'Explainable AI recommendations',
-      'Confidence-bounded predictions',
-      'Real-time meta analysis'
-    ],
     status: 'live'
   },
   {
     id: 'mlforge',
     name: 'MLForge',
-    tagline: 'ML pipeline orchestration with failure as a first-class citizen',
-    description: 'An ML pipeline framework that treats failure modes and commitment boundaries as core architectural concerns, not afterthoughts.',
-    problem: 'Most ML pipelines are optimistic by default. They assume data is clean, models will converge, and deployments will succeed. Reality is messier.',
-    solution: 'MLForge builds failure handling into the pipeline definition. Every stage declares its failure modes, rollback strategies, and commitment points. The system knows what can fail and how to recover.',
-    differentiator: 'Pipeline integrity is enforced at the framework level. You can\'t deploy a model without defining what happens when it drifts. You can\'t process data without declaring validation boundaries.',
-    techStack: ['Python', 'Kubernetes', 'PostgreSQL', 'Redis', 'Prometheus'],
+    tagline: 'ML pipeline tool with explicit failure handling',
+    description: 'A framework for defining ML pipelines where you have to declare what happens when things go wrong. The idea is that failure modes should be part of the pipeline definition, not something you bolt on later.',
+    problem: 'Most ML pipeline tools assume everything will work. You define the happy path, and error handling is an afterthought. I wanted to try the opposite: make failure handling a required part of defining a pipeline stage.',
+    approach: 'Each stage in the pipeline has to declare what kinds of failures it can produce and what should happen for each one. The framework won\'t let you skip this step.',
+    limitations: 'This is an experiment in API design, not a battle-tested framework. I use it to think through how failure handling could work, not to run production workloads.',
+    techStack: ['Python', 'PostgreSQL', 'Redis'],
     liveUrl: 'https://frontend-production-30a6b.up.railway.app/',
     githubUrl: 'https://github.com/JohnRogers-Code-projects/MLForge',
-    highlights: [
-      'Explicit failure mode declarations',
-      'Automatic rollback orchestration',
-      'Commitment boundary enforcement',
-      'Observable pipeline state'
-    ],
     status: 'live'
   },
   {
     id: 'mcp-demo',
     name: 'MCP-Demo',
-    tagline: 'AI tool invocation with principled refusal',
-    description: 'A demonstration of the Model Context Protocol with a focus on constrained tool invocation and principled refusal patterns.',
-    problem: 'AI systems with tool access often fail silently, hallucinate capabilities, or execute actions they shouldn\'t. The failure modes are poorly defined.',
-    solution: 'MCP-Demo implements strict tool boundaries with explicit refusal semantics. When the system can\'t do something, it says why—clearly and consistently.',
-    differentiator: 'Refusal is a feature, not a bug. The demo includes examples of the system correctly declining requests that fall outside its defined capabilities, with clear explanations.',
-    techStack: ['TypeScript', 'MCP Protocol', 'Node.js', 'React'],
+    tagline: 'Demo of AI tool constraints using MCP',
+    description: 'A demo application showing how to use the Model Context Protocol to give an AI access to tools while being explicit about what it can and can\'t do.',
+    problem: 'When you give an AI system access to tools, it\'s not always clear what happens when the AI tries to do something it shouldn\'t, or asks for something that doesn\'t exist. I wanted to see what explicit refusal looks like in practice.',
+    approach: 'The demo defines a set of tools with clear boundaries. When the AI asks for something outside those boundaries, the system refuses and explains why. The point is to make the "no" as clear as the "yes".',
+    limitations: 'This is a demo, not a security tool. It shows one way to handle tool boundaries, but it\'s not a comprehensive solution to AI safety or anything like that.',
+    techStack: ['TypeScript', 'Node.js', 'React'],
     liveUrl: 'https://mcp-demo-production-ddc8.up.railway.app/',
     githubUrl: 'https://github.com/JohnRogers-Code-projects/MCP-Demo',
-    highlights: [
-      'Explicit capability boundaries',
-      'Principled refusal patterns',
-      'Clear error semantics',
-      'Live refusal examples'
-    ],
     status: 'live'
   }
 ];
@@ -79,79 +60,52 @@ export interface Experience {
   period: string;
   location: string;
   description: string;
-  highlights: string[];
   technologies: string[];
 }
 
 export const experiences: Experience[] = [
   {
-    company: 'Current Company',
-    role: 'Senior Backend Engineer',
-    period: '2022 - Present',
-    location: 'Remote / Ireland',
-    description: 'Leading backend architecture for distributed systems handling millions of daily transactions.',
-    highlights: [
-      'Designed and implemented event-driven architecture reducing system latency by 40%',
-      'Led migration from monolith to microservices, improving deployment frequency 10x',
-      'Established observability practices across 15+ services',
-      'Mentored junior engineers on systems design principles'
-    ],
-    technologies: ['Python', 'Go', 'PostgreSQL', 'Kafka', 'Kubernetes', 'AWS']
+    company: 'Merative (formerly IBM Watson Health)',
+    role: 'Software Engineer – Data Analytics',
+    period: '2022 – 2024',
+    location: 'Dublin',
+    description: 'Healthcare analytics applications for US and EU clients in HIPAA/GDPR-regulated environments. Built React frontends connected to Snowflake, implemented data access controls for PHI compliance, maintained MDX queries for healthcare analysis.',
+    technologies: ['React', 'Snowflake', 'MDX', 'HIPAA', 'GDPR']
   },
   {
-    company: 'Previous Company',
-    role: 'Backend Engineer',
-    period: '2019 - 2022',
-    location: 'Dublin, Ireland',
-    description: 'Built and maintained core platform services for a high-growth fintech.',
-    highlights: [
-      'Implemented real-time fraud detection pipeline processing 100k+ events/second',
-      'Designed API gateway handling 50M+ requests/day',
-      'Reduced infrastructure costs by 35% through optimization',
-      'Led technical interviews and onboarding for backend team'
-    ],
-    technologies: ['Python', 'FastAPI', 'Redis', 'PostgreSQL', 'Docker', 'GCP']
+    company: 'IBM Watson Health',
+    role: 'Software Engineer – Healthcare Analytics',
+    period: '2018 – 2022',
+    location: 'Dublin',
+    description: 'Data analytics and reporting on regulated healthcare datasets. Built Cognos reports against PHI-containing datasets, implemented access controls and audit logging, developed Java test suites for data integrity validation.',
+    technologies: ['Java', 'Cognos', 'SQL', 'JUnit', 'HIPAA']
   },
   {
-    company: 'Earlier Company',
-    role: 'Software Engineer',
-    period: '2017 - 2019',
-    location: 'Dublin, Ireland',
-    description: 'Full-stack development with a focus on backend services and data pipelines.',
-    highlights: [
-      'Built ETL pipelines processing 10TB+ daily data volume',
-      'Developed internal tooling that reduced manual operations by 80%',
-      'Contributed to open-source data processing libraries'
-    ],
-    technologies: ['Python', 'Java', 'Apache Spark', 'MySQL', 'AWS']
+    company: 'IBM',
+    role: 'Software Engineer – Watson Workspace',
+    period: '2016 – 2018',
+    location: 'Dublin',
+    description: 'Backend automation and data pipelines for IBM\'s collaboration platform. Built automated localisation pipeline in Ruby, implemented pagination for ETL pipelines, added test coverage with Selenium and JUnit.',
+    technologies: ['Ruby', 'Java', 'Selenium', 'JUnit', 'ETL']
   }
 ];
 
 export interface PhilosophyPoint {
   title: string;
   description: string;
-  example?: string;
 }
 
 export const engineeringPhilosophy: PhilosophyPoint[] = [
   {
-    title: 'Correctness Over Confidence',
-    description: 'Systems should know their limits. A system that says "I don\'t know" when it genuinely doesn\'t is more valuable than one that guesses with false confidence.',
-    example: 'ForgeBreaker explicitly reports confidence intervals and refuses to make recommendations when data is insufficient.'
+    title: 'Say "I don\'t know"',
+    description: 'If a system doesn\'t have enough information to answer, it should say so. Guessing with false confidence is worse than admitting uncertainty.'
   },
   {
-    title: 'Refusal is a Feature',
-    description: 'A well-designed system knows what it can\'t do and communicates that clearly. Silent failures or hallucinated capabilities are worse than explicit refusal.',
-    example: 'MCP-Demo demonstrates principled refusal with clear explanations for why certain requests cannot be fulfilled.'
+    title: 'Refusal should be clear',
+    description: 'When a system can\'t or won\'t do something, it should say why. Silent failures and vague errors make debugging impossible.'
   },
   {
-    title: 'Explicit Boundaries',
-    description: 'System boundaries, failure modes, and commitment points should be declared upfront—not discovered in production. If you can\'t articulate where your system ends, you don\'t understand it.',
-    example: 'MLForge requires explicit failure mode declarations for every pipeline stage.'
-  },
-  {
-    title: 'Failure as Signal',
-    description: 'Failures aren\'t bugs to be hidden—they\'re information about system boundaries. Embrace failure as a core part of system design, not an exception to it.',
-    example: 'All three projects treat failure handling as architectural concerns, not afterthoughts.'
+    title: 'Define failure modes upfront',
+    description: 'If you can\'t describe how your system fails, you don\'t understand it well enough. Failure handling shouldn\'t be an afterthought.'
   }
 ];

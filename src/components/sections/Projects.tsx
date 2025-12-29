@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
+import { ExternalLink, Github, ChevronDown, ChevronUp } from 'lucide-react';
 import { Section, SectionHeader, Card, Button, Badge, TechBadge } from '@/components/ui';
 import { projects, Project } from '@/data/projects';
 
@@ -26,14 +26,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 {project.status === 'live' ? 'Live' : project.status === 'beta' ? 'Beta' : 'Dev'}
               </Badge>
             </div>
-            <p className="text-accent font-medium">{project.tagline}</p>
+            <p className="text-accent">{project.tagline}</p>
           </div>
 
           <div className="flex gap-3">
             {project.liveUrl && (
               <Button href={project.liveUrl} variant="primary" size="sm" external>
                 <ExternalLink className="w-4 h-4" />
-                Live Demo
+                Demo
               </Button>
             )}
             <Button href={project.githubUrl} variant="secondary" size="sm" external>
@@ -46,16 +46,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {/* Description */}
         <p className="text-muted mb-6 leading-relaxed">{project.description}</p>
 
-        {/* Highlights grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
-          {project.highlights.map((highlight, i) => (
-            <div key={i} className="flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
-              <span className="text-sm text-muted">{highlight}</span>
-            </div>
-          ))}
-        </div>
-
         {/* Expand/Collapse button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
@@ -64,12 +54,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {isExpanded ? (
             <>
               <ChevronUp className="w-4 h-4" />
-              Less detail
+              Less
             </>
           ) : (
             <>
               <ChevronDown className="w-4 h-4" />
-              Technical depth
+              More details
             </>
           )}
         </button>
@@ -85,28 +75,28 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               className="overflow-hidden"
             >
               <div className="pt-4 border-t border-card-border space-y-6">
-                {/* Problem */}
+                {/* Why I built it */}
                 <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">
-                    The Problem
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
+                    Why I built it
                   </h4>
                   <p className="text-muted text-sm leading-relaxed">{project.problem}</p>
                 </div>
 
-                {/* Solution */}
+                {/* How it works */}
                 <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">
-                    The Solution
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
+                    How it works
                   </h4>
-                  <p className="text-muted text-sm leading-relaxed">{project.solution}</p>
+                  <p className="text-muted text-sm leading-relaxed">{project.approach}</p>
                 </div>
 
-                {/* Differentiator */}
+                {/* Limitations */}
                 <div>
-                  <h4 className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">
-                    Why This Is Different
+                  <h4 className="text-sm font-semibold text-foreground mb-2">
+                    Limitations
                   </h4>
-                  <p className="text-muted text-sm leading-relaxed">{project.differentiator}</p>
+                  <p className="text-muted text-sm leading-relaxed">{project.limitations}</p>
                 </div>
               </div>
             </motion.div>
@@ -130,8 +120,8 @@ export function Projects() {
   return (
     <Section id="projects">
       <SectionHeader
-        title="Flagship Projects"
-        subtitle="Systems built with intention. Each project demonstrates specific engineering principles—not just what was built, but why it matters."
+        title="Projects"
+        subtitle="Side projects where I explore ideas that interest me. Each one focuses on a specific problem."
       />
 
       <div className="space-y-8">

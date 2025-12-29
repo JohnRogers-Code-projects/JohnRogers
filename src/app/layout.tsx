@@ -13,15 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "John Rogers | Backend & Systems Engineer",
-  description: "Backend and systems engineer focused on AI safety, correctness over confidence, and building systems that fail gracefully. Explore my flagship projects: ForgeBreaker, MLForge, and MCP-Demo.",
-  keywords: ["backend engineer", "systems engineer", "AI safety", "machine learning", "software architecture", "Ireland", "remote"],
+  title: "John Rogers",
+  description: "Backend engineer, Dublin. Healthcare data systems, HIPAA/GDPR. Projects and CV.",
   authors: [{ name: "John Rogers" }],
-  openGraph: {
-    title: "John Rogers | Backend & Systems Engineer",
-    description: "Backend and systems engineer focused on AI safety, correctness over confidence, and building systems that fail gracefully.",
-    type: "website",
-  },
 };
 
 export default function RootLayout({
