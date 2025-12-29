@@ -46,10 +46,10 @@ export function Hero() {
 
             {/* Value proposition */}
             <p className="text-lg text-muted max-w-xl mb-10 leading-relaxed">
-              7+ years building data analytics systems in regulated healthcare environments.
-              Most of my work has involved handling PHI under HIPAA and GDPR, where
-              correctness and auditability matter more than speed. Side projects let me
-              explore failure handling and system boundaries in more depth.
+              Over seven years building data analytics systems in regulated healthcare
+              environments. Most of my work has involved handling PHI under HIPAA and GDPR,
+              where correctness and auditability matter more than speed. Side projects let
+              me explore failure modes and system boundaries in more depth.
             </p>
 
             {/* CTA buttons */}

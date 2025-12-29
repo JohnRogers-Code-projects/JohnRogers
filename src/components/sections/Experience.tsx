@@ -34,13 +34,15 @@ function ExperienceCard({ experience, index }: { experience: typeof experiences[
           </div>
         </div>
 
-        <p className="text-muted mb-4">{experience.description}</p>
+        <p className="text-muted">{experience.description}</p>
 
-        <div className="flex flex-wrap gap-2">
-          {experience.technologies.map((tech) => (
-            <TechBadge key={tech} tech={tech} />
-          ))}
-        </div>
+        {experience.technologies.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4">
+            {experience.technologies.map((tech) => (
+              <TechBadge key={tech} tech={tech} />
+            ))}
+          </div>
+        )}
       </Card>
     </motion.div>
   );

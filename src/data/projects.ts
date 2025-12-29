@@ -67,26 +67,26 @@ export const experiences: Experience[] = [
   {
     company: 'Merative (formerly IBM Watson Health)',
     role: 'Software Engineer – Data Analytics',
-    period: '2022 – 2024',
+    period: '2022–2024',
     location: 'Dublin',
-    description: 'Healthcare analytics applications for US and EU clients in HIPAA/GDPR-regulated environments. Built React frontends connected to Snowflake, implemented data access controls for PHI compliance, maintained MDX queries for healthcare analysis.',
-    technologies: ['React', 'Snowflake', 'MDX', 'HIPAA', 'GDPR']
+    description: 'Worked on healthcare analytics applications operating under HIPAA and GDPR constraints, focusing on backend systems and data access patterns where correctness and auditability were critical.',
+    technologies: []
   },
   {
     company: 'IBM Watson Health',
     role: 'Software Engineer – Healthcare Analytics',
-    period: '2018 – 2022',
+    period: '2018–2022',
     location: 'Dublin',
-    description: 'Data analytics and reporting on regulated healthcare datasets. Built Cognos reports against PHI-containing datasets, implemented access controls and audit logging, developed Java test suites for data integrity validation.',
-    technologies: ['Java', 'Cognos', 'SQL', 'JUnit', 'HIPAA']
+    description: 'Built analytics and reporting systems for regulated healthcare data, including automated test suites, access control mechanisms, and audit logging aligned with HIPAA safeguards.',
+    technologies: []
   },
   {
     company: 'IBM',
     role: 'Software Engineer – Watson Workspace',
-    period: '2016 – 2018',
+    period: '2016–2018',
     location: 'Dublin',
-    description: 'Backend automation and data pipelines for IBM\'s collaboration platform. Built automated localisation pipeline in Ruby, implemented pagination for ETL pipelines, added test coverage with Selenium and JUnit.',
-    technologies: ['Ruby', 'Java', 'Selenium', 'JUnit', 'ETL']
+    description: 'Backend automation and ETL pipeline development for collaboration software, including localisation pipelines and large dataset handling.',
+    technologies: []
   }
 ];
 
