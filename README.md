@@ -1,173 +1,175 @@
 # John Rogers — Portfolio
 
-A multi-repository system demonstrating production-grade architecture patterns for AI-augmented applications.
+## About Me
+
+I've been building, fixing, and thinking about systems for most of my working life — not just software systems, but real ones: organisations, processes, products, and teams across a range of industries.
+
+Software engineering is where those interests have converged most strongly for me. I enjoy work that sits at the intersection of practical problem-solving and careful design: understanding how something behaves in the real world, where it breaks down, and how to make it simpler, more robust, or easier to reason about.
+
+This portfolio reflects that mindset. Rather than a collection of disconnected projects, it's organised around a small set of ideas I care about:
+
+- building systems rather than demos,
+- separating infrastructure from domain logic,
+- and being honest about trade-offs instead of hiding them behind abstraction.
+
+Outside of software, I have broad interests — games (both digital and tabletop), science, current affairs, music, cooking, and health — and I've found that those interests tend to inform how I think about engineering. Good systems, like good recipes or good games, balance structure with flexibility and reward thoughtful constraints.
+
+I'm not particularly interested in chasing trends or novelty for its own sake. I care more about clarity, longevity, and reuse, which is why many of the projects here focus on infrastructure and composition rather than one-off features.
 
 ---
 
-## TL;DR
+## How This Portfolio Is Structured
 
-This portfolio is a single system split across purpose-built repositories. The flagship application (ForgeBreaker) consumes two supporting services (MLForge, MCP-Gateway) to demonstrate how real systems decompose complex AI workloads into maintainable, independently deployable components. LarderLab exists as a minimal second consumer of MCP-Gateway, proving the gateway's reusability across unrelated domains.
+This repository is a narrative and presentation layer for a small system of related projects. The goal isn't to show as many technologies as possible, but to show how a few ideas hold up when applied consistently.
+
+At a high level, the work is organised around:
+
+- one primary, domain-specific application,
+- a couple of reusable infrastructure services,
+- and a second, intentionally lightweight application used to validate those abstractions.
+
+The emphasis is on system boundaries, not feature lists.
 
 ---
 
-## System Overview
+## The System at a Glance
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                         ForgeBreaker                            │
-│              (Domain Application — MTG Deck Analysis)           │
-│                                                                 │
-│   Deterministic Analysis  +  ML Inference  +  LLM Tool Usage    │
-└─────────────────┬───────────────────────────────────────────────┬───────────┘
-                  │                                   │
-                  ▼                                   ▼
-       ┌──────────────────┐                ┌──────────────────┐
-       │     MLForge      │                │   MCP-Gateway    │
-       │  (ML Inference)  │                │  (Tool Routing)  │
-       └──────────────────┘                └────────┬─────────┘
-                                                    │
-                                                    ▲
-                                           ┌────────┴─────────┐
-                                           │    LarderLab     │
-                                           │   (Reuse Demo)   │
-                                           └──────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              ForgeBreaker                                   │
+│                   (Domain Application — MTG Deck Analysis)                  │
+│                                                                             │
+│        Deterministic Analysis  +  ML Inference  +  LLM Tool Usage           │
+└───────────────────────┬─────────────────────────────────┬───────────────────┘
+                        │                                 │
+                        ▼                                 ▼
+             ┌──────────────────┐               ┌──────────────────┐
+             │     MLForge      │               │   MCP-Gateway    │
+             │  (ML Inference)  │               │  (Tool Routing)  │
+             └──────────────────┘               └────────┬─────────┘
+                                                         │
+                                                         ▲
+                                              ┌──────────┴─────────┐
+                                              │     LarderLab      │
+                                              │    (Reuse Demo)    │
+                                              └────────────────────┘
 ```
 
-**ForgeBreaker** is the user-facing application. It performs Magic: The Gathering deck analysis by combining:
-- Deterministic card and mana curve analysis
-- ML-based archetype classification (via MLForge)
-- LLM-powered conversational insights (via MCP-Gateway)
+At the centre of the system is **MCP-Gateway**, a small service that handles LLM tool orchestration in a deterministic, explicit way. It exists to separate "how tools are exposed and invoked" from any particular application or domain.
 
-**MLForge** handles model inference as a standalone service, decoupling model lifecycle from application deployment.
+Two different applications make use of that same infrastructure:
 
-**MCP-Gateway** provides a stateless interface for LLM tool invocation. Both ForgeBreaker and LarderLab consume it, demonstrating that the gateway's contracts are domain-agnostic.
+- **ForgeBreaker**, a complex, domain-heavy application in the Magic: The Gathering space
+- **LarderLab**, a deliberately simple application in an unrelated domain (food and ingredients)
 
-**LarderLab** is a lightweight meal planning demo. Its sole purpose is to prove MCP-Gateway reuse across unrelated domains. It is not a full application.
+Both applications register tools with MCP-Gateway and interact with it in the same way. The difference between them is not infrastructure, but domain complexity.
+
+That distinction is intentional.
 
 ---
 
-## Why Multiple Repositories?
+## Why This Structure?
 
-This separation is intentional and reflects how production systems actually ship:
+This separation reflects how I think production systems should actually ship:
 
 | Concern | Repository | Rationale |
 |---------|------------|-----------|
 | Domain logic | ForgeBreaker | Application-specific; changes frequently |
 | Model inference | MLForge | Different deployment cadence; GPU/resource requirements differ |
-| Tool orchestration | MCP-Gateway | Shared infrastructure; multiple consumers (ForgeBreaker, LarderLab) |
+| Tool orchestration | MCP-Gateway | Shared infrastructure; multiple consumers |
 | Reuse validation | LarderLab | Proves MCP-Gateway works outside MTG domain |
 
-Single-repo alternatives were considered and rejected. The tradeoffs:
-
-- **Monorepo**: Couples deployment and testing; forces infrastructure decisions into application code
-- **Library extraction**: Insufficient isolation; shared process means shared failure modes
-- **This approach**: Clear contracts, independent scaling, graceful degradation when dependencies are unavailable
+I considered single-repo alternatives and rejected them. A monorepo couples deployment and testing; library extraction doesn't provide enough isolation. Separate services mean clear contracts, independent scaling, and graceful degradation when dependencies are unavailable.
 
 ---
 
 ## Projects
 
 ### ForgeBreaker
-**Role**: Flagship domain application
 
-A Magic: The Gathering deck analysis assistant that demonstrates how to compose deterministic logic, ML inference, and LLM capabilities into a coherent user experience.
+ForgeBreaker is the flagship application in this portfolio.
 
-- Full-stack implementation with React frontend and Python backend
-- "Try with sample deck" flow for zero-friction demo
-- Graceful degradation when MLForge or MCP-Gateway are unavailable
-- Deterministic analysis always available; AI features enhance, not gate
+It's a Magic: The Gathering deck analysis and exploration tool, built as a real system rather than a toy problem. The domain is complicated, opinionated, and full of edge cases, which makes it a good stress-test for architectural decisions.
+
+ForgeBreaker is where most of the complexity lives: domain logic, analysis pipelines, integration with external services, and non-trivial failure modes.
+
+It uses MCP-Gateway for LLM tool orchestration and can optionally integrate with MLForge for model-based inference. A curated sample deck is provided so that new users can explore the system without needing their own collection.
+
+ForgeBreaker is not meant to be "clever". It's meant to be understandable, inspectable, and honest about where automation helps and where it doesn't.
 
 [View Repository](https://github.com/JohnRogers/ForgeBreaker)
 
 ---
 
-### MLForge
-**Role**: ML inference service
+### LarderLab
 
-Standalone service for model hosting and inference. Exists because model deployment has different constraints than application deployment: retraining a model should not require redeploying the application, and vice versa.
+LarderLab is intentionally small.
 
-- Isolates model versioning from application releases
-- Enables A/B testing and gradual rollouts at the model layer
-- Structured for horizontal scaling independent of application tier
-- Health endpoints support circuit-breaker patterns in consumers
+It's a simple application that lets users ask questions about ingredients and basic recipes. There are no accounts, no personalization, and no attempt to turn it into a full product.
 
-[View Repository](https://github.com/JohnRogers/MLForge)
+Its purpose is very specific: to demonstrate that MCP-Gateway is genuinely reusable infrastructure, not something tightly coupled to ForgeBreaker or to the Magic domain.
+
+LarderLab uses the same gateway, the same tool registration model, and the same interaction patterns — just applied to a completely different problem space.
+
+A small public demo is available for people who want to see the system work without touching Magic: The Gathering.
+
+[View Repository](https://github.com/JohnRogers/LarderLab)
 
 ---
 
 ### MCP-Gateway
-**Role**: Shared LLM tool infrastructure
 
-Stateless service implementing the Model Context Protocol for tool registration, discovery, and invocation. Both ForgeBreaker and LarderLab route their LLM tool calls through this gateway.
+MCP-Gateway is a small, focused service that handles LLM tool orchestration.
 
-- Normalizes tool interfaces across multiple backend implementations
-- Handles error translation and timeout management
-- Domain-agnostic by design; adding consumers requires no gateway changes
-- Separates "what tools exist" from "how to call an LLM"
+It's responsible for tool registration, schema validation, deterministic tool invocation, and normalised error handling. It does not contain business logic, domain knowledge, or application state. Those concerns are intentionally pushed out to consuming applications.
+
+This service started as an experiment, but became infrastructure once it proved useful in more than one place. Its current form reflects that shift.
 
 [View Repository](https://github.com/JohnRogers/MCP-Gateway)
 
 ---
 
-### LarderLab
-**Role**: MCP-Gateway reuse demonstration
+### MLForge
 
-A minimal meal planning interface that consumes MCP-Gateway. LarderLab exists to validate that MCP-Gateway works outside the MTG domain. It is intentionally lightweight—just enough functionality to prove the gateway's contracts are domain-agnostic.
+MLForge is a generic model-serving service, designed to be usable independently of any specific application.
 
-If you're not interested in Magic: The Gathering, LarderLab provides an alternative entry point to see MCP-Gateway in action.
+It handles model loading, inference requests, and basic operational concerns around serving ML models. ForgeBreaker can use MLForge for certain analysis paths, but it is not required.
 
-[View Demo](https://github.com/JohnRogers/LarderLab)
+MLForge does not depend on MCP-Gateway, and MCP-Gateway does not depend on MLForge. The services are intentionally orthogonal.
+
+[View Repository](https://github.com/JohnRogers/MLForge)
 
 ---
 
 ## Design Philosophy
 
-- **Separation of concerns over convenience**: More repos means more boundaries; boundaries force explicit contracts
-- **Graceful degradation by default**: Every integration point has a fallback; partial functionality beats total failure
-- **Demo-ability matters**: A reviewer should be able to see the system work without environment setup
-- **No premature abstraction**: Each service exists because there's a concrete reason to deploy it separately
-- **Operational empathy**: Health checks, structured logging, and clear error messages are not afterthoughts
+A few themes run through all of these projects:
+
+- **Clear boundaries matter more than clever abstractions.** Every service exists because there's a concrete reason to deploy it separately, not because separation seemed like a good idea in the abstract.
+
+- **Reusability should be proven, not promised.** MCP-Gateway is infrastructure because two different applications actually use it. LarderLab exists specifically to validate that claim.
+
+- **Graceful degradation by default.** Every integration point has a fallback. Partial functionality beats total failure. If MLForge is unavailable, ForgeBreaker still works — the AI features enhance, they don't gate.
+
+- **Demo-ability matters.** A reviewer should be able to see the system work without environment setup. Sample data and public demos exist for that reason.
 
 ---
 
 ## How to Review This Portfolio
 
 **5 minutes:**
-1. Visit ForgeBreaker and run the sample deck demo
-2. Note how results include both deterministic and AI-generated insights
+Visit ForgeBreaker and run the sample deck demo. Note how results include both deterministic and AI-generated insights.
 
 **15 minutes:**
-1. Review ForgeBreaker's architecture documentation
-2. Trace how it calls MLForge and MCP-Gateway
-3. Observe the fallback behavior when services are unavailable
+Review ForgeBreaker's architecture documentation. Trace how it calls MLForge and MCP-Gateway. Observe the fallback behavior when services are unavailable.
 
 **30+ minutes:**
-1. Clone ForgeBreaker and run locally
-2. Review MLForge's model serving implementation
-3. Review MCP-Gateway's tool registration flow
+Clone ForgeBreaker and run locally. Review MLForge's model serving implementation. Review MCP-Gateway's tool registration flow.
 
-Start with ForgeBreaker. It's the entry point and demonstrates how the pieces fit together. If MTG isn't your domain, LarderLab shows MCP-Gateway reuse in a different context.
+Start with ForgeBreaker — it's the entry point and shows how the pieces fit together. If MTG isn't your domain, LarderLab shows MCP-Gateway reuse in a different context.
 
 ---
 
-## What This Architecture Enables
-
-ForgeBreaker alone is sufficient to understand this system. The supporting services exist to demonstrate separation of concerns, not to imply future expansion. LarderLab exists specifically to prove that MCP-Gateway is reusable—not as a product in its own right.
-
-Properties of the current design:
-
-- **Service reuse**: MCP-Gateway serves both ForgeBreaker and LarderLab without modification
-- **Independent deployment**: MLForge can be retrained and redeployed without touching application code
-- **Horizontal scaling**: Each service scales according to its own resource profile
-
-These are properties of the current design, not a roadmap.
-
----
-
-## About Me
-
-I build systems that work correctly under real-world conditions. My focus is on the intersection of traditional software engineering and AI/ML integration—specifically, how to build AI-augmented applications that remain testable, debuggable, and maintainable.
-
-This portfolio represents my approach: start with a working domain application, extract shared concerns into services when there's a concrete reason, and ensure the system degrades gracefully when components are unavailable.
+## Contact
 
 [LinkedIn](https://linkedin.com/in/johnrogers) | [Email](mailto:john@example.com)
