@@ -111,4 +111,4 @@ This portfolio was developed with assistance from Claude (Anthropic). AI was use
 
 ## Contact
 
-[LinkedIn](https://linkedin.com/in/johnrogers) | [Email](mailto:john@example.com)
+[LinkedIn](https://linkedin.com/in/johnrogers) | [Email](mailto:rogersjoh@gmail.com)
