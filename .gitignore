@@ -1,9 +1,44 @@
 # IDE and editor
 .idea/
 .vscode/
+*.iml
+.project
+.classpath
+.settings/
 *.swp
 *.swo
 *~
 
 # Claude Code
 .claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment and secrets
+.env
+.env.*
+secrets.*
+config.local.*
+*.pem
+*.key
+*.crt
+
+# Build artifacts
+node_modules/
+dist/
+build/
+.next/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Logs and dumps
+*.log
+*.out
+*.dump
+*.tmp
