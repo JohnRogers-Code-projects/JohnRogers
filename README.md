@@ -75,6 +75,9 @@ At present, MCP-Gateway is not used by ForgeBreaker.
 
 It stands on its own as an exploration of protocol shape, request handling, and execution context modeling. It should be read as a design experiment, not as integrated infrastructure.
 
+I built MCP-Gateway to explore what it would take to externalize tool execution, but I deliberately stopped short of integrating it once I realized the complexity tradeoff wasn’t justified yet.
+
+
 [View Repository](https://github.com/JohnRogers/MCP-Gateway)
 
 ---
