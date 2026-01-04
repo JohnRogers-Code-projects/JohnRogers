@@ -4,145 +4,620 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>John Rogers - Engineering Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: #fafafa;
+        :root {
+            --bg-primary: #1e1e2e;
+            --bg-secondary: #181825;
+            --bg-tertiary: #11111b;
+            --text-primary: #cdd6f4;
+            --text-secondary: #a6adc8;
+            --text-muted: #6c7086;
+            --accent-blue: #89b4fa;
+            --accent-green: #a6e3a1;
+            --accent-purple: #cba6f7;
+            --accent-peach: #fab387;
+            --accent-red: #f38ba8;
+            --accent-yellow: #f9e2af;
+            --border: #313244;
+            --highlight: #45475a;
         }
-        h1 { color: #1a1a1a; margin-bottom: 0.5rem; }
-        h2 { color: #2a2a2a; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; margin-top: 2.5rem; }
-        h3 { color: #444; }
-        a { color: #0066cc; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        hr { border: none; border-top: 1px solid #ddd; margin: 2rem 0; }
-        .cv-download {
-            display: inline-block;
-            background: #0066cc;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 6px;
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 60px;
+        }
+
+        .nav-logo {
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
-            margin: 1rem 0 2rem 0;
+            color: var(--accent-green);
             font-size: 1.1rem;
         }
-        .cv-download:hover { background: #0052a3; text-decoration: none; }
-        .repo-link {
-            display: inline-block;
-            background: #f0f0f0;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            margin-top: 0.5rem;
+
+        .nav-logo span { color: var(--text-muted); }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
         }
-        .contact { margin-top: 2rem; }
-        .contact a { margin-right: 1.5rem; }
-        .highlight { background: #fff3cd; padding: 1rem; border-radius: 6px; margin: 1rem 0; }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: var(--highlight);
+            color: var(--text-primary);
+        }
+
+        /* Main content */
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 2rem 4rem;
+        }
+
+        /* Hero section */
+        .hero {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .profile-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 3px solid var(--border);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero-content h1 span {
+            color: var(--accent-blue);
+        }
+
+        .hero-tagline {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: var(--bg-tertiary);
+        }
+
+        .btn-primary:hover {
+            background: #b4d0fb;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--highlight);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--border);
+            transform: translateY(-2px);
+        }
+
+        /* Section styling */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-purple);
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Code block style highlight */
+        .highlight-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: var(--accent-green);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Project cards */
+        .projects-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .project-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(137, 180, 250, 0.1);
+        }
+
+        .project-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-peach);
+        }
+
+        .project-status {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-complete {
+            background: rgba(166, 227, 161, 0.15);
+            color: var(--accent-green);
+        }
+
+        .status-experimental {
+            background: rgba(249, 226, 175, 0.15);
+            color: var(--accent-yellow);
+        }
+
+        .status-sandbox {
+            background: rgba(108, 112, 134, 0.15);
+            color: var(--text-muted);
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .project-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-features li {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 0.25rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .project-features li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .link-demo {
+            background: var(--accent-green);
+            color: var(--bg-tertiary);
+        }
+
+        .link-demo:hover {
+            background: #b8e8b3;
+        }
+
+        .link-repo {
+            background: var(--highlight);
+            color: var(--text-primary);
+        }
+
+        .link-repo:hover {
+            background: var(--border);
+        }
+
+        /* Guide section */
+        .guide-list {
+            list-style: none;
+        }
+
+        .guide-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .guide-list li:last-child {
+            border-bottom: none;
+        }
+
+        .guide-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .label-primary {
+            background: rgba(166, 227, 161, 0.15);
+            color: var(--accent-green);
+        }
+
+        .label-experiment {
+            background: rgba(249, 226, 175, 0.15);
+            color: var(--accent-yellow);
+        }
+
+        .label-sandbox {
+            background: rgba(108, 112, 134, 0.15);
+            color: var(--text-muted);
+        }
+
+        /* About text */
+        .about-text {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        /* Contact */
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .contact-link:hover {
+            border-color: var(--accent-blue);
+            background: var(--highlight);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 4rem;
+        }
+
+        .footer-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-note a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .profile-photo {
+                margin: 0 auto;
+                width: 150px;
+                height: 150px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            main {
+                padding: 80px 1rem 2rem;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>John Rogers - Engineering Portfolio</h1>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">john<span>@</span>rogers<span>:~$</span></div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#guide">Guide</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <a href="John Rogers CV.pdf" class="cv-download">Download my CV (PDF)</a>
+    <main>
+        <section class="hero">
+            <img src="profile.jpg" alt="John Rogers" class="profile-photo">
+            <div class="hero-content">
+                <h1>John <span>Rogers</span></h1>
+                <p class="hero-tagline">Software engineer focused on backend systems, ML-backed services, and thoughtful architecture.</p>
+                <div class="hero-actions">
+                    <a href="John Rogers CV.pdf" class="btn btn-primary">Download CV</a>
+                    <a href="#projects" class="btn btn-secondary">View Projects</a>
+                </div>
+            </div>
+        </section>
 
-    <hr>
+        <section id="about">
+            <div class="section-header">
+                <h2>// about</h2>
+            </div>
+            <div class="about-text">
+                <p>I've been building, fixing, and thinking about systems for most of my working life - not just software systems, but real ones: organisations, processes, products, and teams across a range of industries.</p>
+                <p>Software engineering is where those interests have converged most strongly for me. I enjoy work that sits at the intersection of practical problem-solving and careful design: understanding how something behaves in the real world, where it breaks down, and how to make it simpler, more robust, or easier to reason about.</p>
+                <p>Outside of software, I have broad interests - games (both digital and tabletop), science, current affairs, music, cooking, and health - and I've found that those interests tend to inform how I think about engineering. Good systems, like good recipes or good games, balance structure with flexibility and reward thoughtful constraints.</p>
+                <p style="margin-bottom: 0;">I'm not particularly interested in chasing trends or novelty for its own sake. I care more about clarity, longevity, and reuse, which is why many of the projects here focus on infrastructure and composition rather than one-off features.</p>
+            </div>
+        </section>
 
-    <p>I've been building, fixing, and thinking about systems for most of my working life - not just software systems, but real ones: organisations, processes, products, and teams across a range of industries.</p>
+        <section id="projects">
+            <div class="section-header">
+                <h2>// projects</h2>
+            </div>
 
-    <p>Software engineering is where those interests have converged most strongly for me. I enjoy work that sits at the intersection of practical problem-solving and careful design: understanding how something behaves in the real world, where it breaks down, and how to make it simpler, more robust, or easier to reason about.</p>
+            <div class="highlight-box">
+                <strong>ForgeBreaker &harr; MLForge</strong> is the core integration in this portfolio - real, exercised in code, and central to how ForgeBreaker works. Everything else should be read as supporting work, experiments, or scaffolding.
+            </div>
 
-    <p>Outside of software, I have broad interests - games (both digital and tabletop), science, current affairs, music, cooking, and health - and I've found that those interests tend to inform how I think about engineering. Good systems, like good recipes or good games, balance structure with flexibility and reward thoughtful constraints.</p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">ForgeBreaker</span>
+                        <span class="project-status status-complete">Complete</span>
+                    </div>
+                    <p class="project-description">Backend service for Magic: The Gathering deck construction and analysis. The primary project demonstrating end-to-end system design.</p>
+                    <ul class="project-features">
+                        <li>Domain modeling and rules engine</li>
+                        <li>LLM orchestration with budget controls</li>
+                        <li>Persistence, caching, and rate limiting</li>
+                        <li>Direct integration with MLForge</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://frontend-production-57a1.up.railway.app/" class="project-link link-demo" target="_blank">Live Demo</a>
+                        <a href="https://github.com/JohnRogers/ForgeBreaker" class="project-link link-repo" target="_blank">GitHub</a>
+                    </div>
+                </div>
 
-    <p>I'm not particularly interested in chasing trends or novelty for its own sake. I care more about clarity, longevity, and reuse, which is why many of the projects here focus on infrastructure and composition rather than one-off features.</p>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">MLForge</span>
+                        <span class="project-status status-complete">Complete</span>
+                    </div>
+                    <p class="project-description">Standalone model-serving backend with clean separation from application logic. Used by ForgeBreaker for model-backed inference.</p>
+                    <ul class="project-features">
+                        <li>Model loading and validation</li>
+                        <li>Inference request handling</li>
+                        <li>Async execution and caching</li>
+                        <li>Model readiness invariants</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://frontend-production-30a6b.up.railway.app/" class="project-link link-demo" target="_blank">Live Demo</a>
+                        <a href="https://github.com/JohnRogers/MLForge" class="project-link link-repo" target="_blank">GitHub</a>
+                    </div>
+                </div>
 
-    <hr>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">MCP-Gateway</span>
+                        <span class="project-status status-experimental">Experimental</span>
+                    </div>
+                    <p class="project-description">Explores tool-execution boundaries using JSON-RPC / MCP-style interactions. A design experiment in protocol shape and execution context modeling.</p>
+                    <ul class="project-features">
+                        <li>Tool execution behind service boundary</li>
+                        <li>Protocol shape exploration</li>
+                        <li>Request handling patterns</li>
+                        <li>Execution context modeling</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://mcp-demo-production-ddc8.up.railway.app" class="project-link link-demo" target="_blank">Live Demo</a>
+                        <a href="https://github.com/JohnRogers/MCP-Gateway" class="project-link link-repo" target="_blank">GitHub</a>
+                    </div>
+                </div>
 
-    <p>This repository is an index and narrative wrapper around a small set of related projects I've built while exploring backend systems, ML-backed services, and service boundaries. The goal is not to present a polished product suite, but to make my design thinking, tradeoffs, and execution style legible.</p>
+                <div class="project-card">
+                    <div class="project-header">
+                        <span class="project-title">LarderLab</span>
+                        <span class="project-status status-sandbox">Sandbox</span>
+                    </div>
+                    <p class="project-description">A sandbox for experimenting with service interactions and data flow. Reflects ideas being explored rather than conclusions reached.</p>
+                    <ul class="project-features">
+                        <li>Service interaction patterns</li>
+                        <li>Data flow experiments</li>
+                        <li>Learning-focused development</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://larderlabs-frontend-production.up.railway.app" class="project-link link-demo" target="_blank">Live Demo</a>
+                        <a href="https://github.com/JohnRogers/LarderLab" class="project-link link-repo" target="_blank">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <p>Nothing here is intended as a startup pitch. Some parts are complete, some are exploratory, and some exist mainly to support learning or future work. Where something is unfinished or aspirational, I try to say so plainly.</p>
+        <section id="guide">
+            <div class="section-header">
+                <h2>// how to read this</h2>
+            </div>
+            <p>If you're reviewing this as a hiring manager or engineer:</p>
+            <ul class="guide-list">
+                <li>
+                    <span class="guide-label label-primary">Primary</span>
+                    <span>Treat <strong>ForgeBreaker + MLForge</strong> as the core signal of my engineering work.</span>
+                </li>
+                <li>
+                    <span class="guide-label label-experiment">Experiment</span>
+                    <span>Treat <strong>MCP-Gateway</strong> as a protocol and architecture experiment.</span>
+                </li>
+                <li>
+                    <span class="guide-label label-sandbox">Sandbox</span>
+                    <span>Treat <strong>LarderLab</strong> as an unfinished lab space, not a product.</span>
+                </li>
+            </ul>
+            <p style="margin-top: 1.5rem;">I'm more interested in being precise about what exists than in presenting a perfectly unified story. Some connections are real, some are aspirational, and some are simply ideas I haven't finished testing yet.</p>
+        </section>
 
-    <hr>
+        <section id="contact">
+            <div class="section-header">
+                <h2>// contact</h2>
+            </div>
+            <div class="contact-links">
+                <a href="mailto:rogersjoh@gmail.com" class="contact-link">rogersjoh@gmail.com</a>
+                <a href="https://linkedin.com/in/johnrogers" class="contact-link" target="_blank">LinkedIn</a>
+            </div>
+        </section>
 
-    <h2>What Actually Exists Today</h2>
-
-    <p>There is one complete, end-to-end system in this portfolio:</p>
-
-    <div class="highlight">
-        <strong>ForgeBreaker &harr; MLForge</strong><br>
-        That integration is real, exercised in code, and central to how ForgeBreaker works. Everything else in this portfolio should be read as supporting work, experiments, or scaffolding around that core.
-    </div>
-
-    <hr>
-
-    <h2>Repositories</h2>
-
-    <h3>ForgeBreaker</h3>
-    <p>ForgeBreaker is the primary project. It is a backend service for assisting with Magic: The Gathering deck construction and analysis. It handles:</p>
-    <ul>
-        <li>domain modeling and rules</li>
-        <li>orchestration of LLM calls</li>
-        <li>budget and rate controls</li>
-        <li>persistence and caching</li>
-        <li>integration with a separate ML inference service</li>
-    </ul>
-    <p>ForgeBreaker is intentionally opinionated and fairly complete. It has tests, CI, and documentation because it's the project where I spent the most time validating ideas end-to-end.</p>
-    <p>Importantly: ForgeBreaker directly integrates with MLForge for model-backed inference. That boundary is real and exercised.</p>
-    <a href="https://github.com/JohnRogers/ForgeBreaker" class="repo-link">View Repository</a>
-
-    <hr>
-
-    <h3>MLForge</h3>
-    <p>MLForge is a standalone model-serving backend. It is responsible for:</p>
-    <ul>
-        <li>loading and validating trained models</li>
-        <li>handling inference requests</li>
-        <li>managing caching and async execution</li>
-        <li>enforcing invariants around model readiness</li>
-    </ul>
-    <p>MLForge exists because I wanted a clean separation between application logic and model-serving concerns. It is used by ForgeBreaker today and is not hypothetical.</p>
-    <a href="https://github.com/JohnRogers/MLForge" class="repo-link">View Repository</a>
-
-    <hr>
-
-    <h3>MCP-Gateway</h3>
-    <p>MCP-Gateway is an experimental service. It explores a tool-execution boundary based on JSON-RPC / MCP-style interactions. The intent is to understand what it would take to move tool execution behind a dedicated service boundary rather than embedding it directly in an application.</p>
-    <p>At present, MCP-Gateway is not used by ForgeBreaker. It stands on its own as an exploration of protocol shape, request handling, and execution context modeling. It should be read as a design experiment, not as integrated infrastructure.</p>
-    <p>I built MCP-Gateway to explore what it would take to externalize tool execution, but I deliberately stopped short of integrating it once I realized the complexity tradeoff wasn't justified yet.</p>
-    <a href="https://github.com/JohnRogers/MCP-Gateway" class="repo-link">View Repository</a>
-
-    <hr>
-
-    <h3>LarderLab</h3>
-    <p>LarderLab is the least mature project in the set. It started as a sandbox for experimenting with service interactions and data flow, and it currently does not validate or exercise the other services in a meaningful way. There is no claim that it is production-quality or even complete.</p>
-    <p>If anything, it reflects ideas I was exploring rather than conclusions I've reached.</p>
-    <a href="https://github.com/JohnRogers/LarderLab" class="repo-link">View Repository</a>
-
-    <hr>
-
-    <h2>How to Read This Portfolio</h2>
-    <p>If you're reviewing this as a hiring manager or engineer:</p>
-    <ul>
-        <li>Treat <strong>ForgeBreaker + MLForge</strong> as the core signal.</li>
-        <li>Treat <strong>MCP-Gateway</strong> as a protocol and architecture experiment.</li>
-        <li>Treat <strong>LarderLab</strong> as an unfinished lab space, not a product.</li>
-    </ul>
-    <p>I'm more interested in being precise about what exists than in presenting a perfectly unified story. Some connections are real, some are aspirational, and some are simply ideas I haven't finished testing yet.</p>
-
-    <hr>
-
-    <h2>AI Assistance</h2>
-    <p>This portfolio was developed with assistance from Claude (Anthropic). AI was used for code generation, architectural discussion, documentation drafting, and debugging. I reviewed, edited, and tested all outputs.</p>
-
-    <hr>
-
-    <div class="contact">
-        <h2>Contact</h2>
-        <a href="https://linkedin.com/in/johnrogers">LinkedIn</a>
-        <a href="mailto:rogersjoh@gmail.com">Email</a>
-    </div>
+        <footer>
+            <p class="footer-note">This portfolio was developed with assistance from <a href="https://anthropic.com" target="_blank">Claude (Anthropic)</a>. AI was used for code generation, architectural discussion, documentation drafting, and debugging. All outputs were reviewed, edited, and tested.</p>
+        </footer>
+    </main>
 </body>
 </html>
