@@ -1,5 +1,9 @@
 # John Rogers – Engineering Portfolio
 
+📄 **[Download my CV](John%20Rogers%20CV.pdf)**
+
+---
+
 I've been building, fixing, and thinking about systems for most of my working life — not just software systems, but real ones: organisations, processes, products, and teams across a range of industries.
 
 Software engineering is where those interests have converged most strongly for me. I enjoy work that sits at the intersection of practical problem-solving and careful design: understanding how something behaves in the real world, where it breaks down, and how to make it simpler, more robust, or easier to reason about.
