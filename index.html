@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John Rogers - Engineering Portfolio</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #fafafa;
+        }
+        h1 { color: #1a1a1a; margin-bottom: 0.5rem; }
+        h2 { color: #2a2a2a; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; margin-top: 2.5rem; }
+        h3 { color: #444; }
+        a { color: #0066cc; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        hr { border: none; border-top: 1px solid #ddd; margin: 2rem 0; }
+        .cv-download {
+            display: inline-block;
+            background: #0066cc;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            margin: 1rem 0 2rem 0;
+            font-size: 1.1rem;
+        }
+        .cv-download:hover { background: #0052a3; text-decoration: none; }
+        .repo-link {
+            display: inline-block;
+            background: #f0f0f0;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        .contact { margin-top: 2rem; }
+        .contact a { margin-right: 1.5rem; }
+        .highlight { background: #fff3cd; padding: 1rem; border-radius: 6px; margin: 1rem 0; }
+    </style>
+</head>
+<body>
+    <h1>John Rogers - Engineering Portfolio</h1>
+
+    <a href="John Rogers CV.pdf" class="cv-download">Download my CV (PDF)</a>
+
+    <hr>
+
+    <p>I've been building, fixing, and thinking about systems for most of my working life - not just software systems, but real ones: organisations, processes, products, and teams across a range of industries.</p>
+
+    <p>Software engineering is where those interests have converged most strongly for me. I enjoy work that sits at the intersection of practical problem-solving and careful design: understanding how something behaves in the real world, where it breaks down, and how to make it simpler, more robust, or easier to reason about.</p>
+
+    <p>Outside of software, I have broad interests - games (both digital and tabletop), science, current affairs, music, cooking, and health - and I've found that those interests tend to inform how I think about engineering. Good systems, like good recipes or good games, balance structure with flexibility and reward thoughtful constraints.</p>
+
+    <p>I'm not particularly interested in chasing trends or novelty for its own sake. I care more about clarity, longevity, and reuse, which is why many of the projects here focus on infrastructure and composition rather than one-off features.</p>
+
+    <hr>
+
+    <p>This repository is an index and narrative wrapper around a small set of related projects I've built while exploring backend systems, ML-backed services, and service boundaries. The goal is not to present a polished product suite, but to make my design thinking, tradeoffs, and execution style legible.</p>
+
+    <p>Nothing here is intended as a startup pitch. Some parts are complete, some are exploratory, and some exist mainly to support learning or future work. Where something is unfinished or aspirational, I try to say so plainly.</p>
+
+    <hr>
+
+    <h2>What Actually Exists Today</h2>
+
+    <p>There is one complete, end-to-end system in this portfolio:</p>
+
+    <div class="highlight">
+        <strong>ForgeBreaker &harr; MLForge</strong><br>
+        That integration is real, exercised in code, and central to how ForgeBreaker works. Everything else in this portfolio should be read as supporting work, experiments, or scaffolding around that core.
+    </div>
+
+    <hr>
+
+    <h2>Repositories</h2>
+
+    <h3>ForgeBreaker</h3>
+    <p>ForgeBreaker is the primary project. It is a backend service for assisting with Magic: The Gathering deck construction and analysis. It handles:</p>
+    <ul>
+        <li>domain modeling and rules</li>
+        <li>orchestration of LLM calls</li>
+        <li>budget and rate controls</li>
+        <li>persistence and caching</li>
+        <li>integration with a separate ML inference service</li>
+    </ul>
+    <p>ForgeBreaker is intentionally opinionated and fairly complete. It has tests, CI, and documentation because it's the project where I spent the most time validating ideas end-to-end.</p>
+    <p>Importantly: ForgeBreaker directly integrates with MLForge for model-backed inference. That boundary is real and exercised.</p>
+    <a href="https://github.com/JohnRogers/ForgeBreaker" class="repo-link">View Repository</a>
+
+    <hr>
+
+    <h3>MLForge</h3>
+    <p>MLForge is a standalone model-serving backend. It is responsible for:</p>
+    <ul>
+        <li>loading and validating trained models</li>
+        <li>handling inference requests</li>
+        <li>managing caching and async execution</li>
+        <li>enforcing invariants around model readiness</li>
+    </ul>
+    <p>MLForge exists because I wanted a clean separation between application logic and model-serving concerns. It is used by ForgeBreaker today and is not hypothetical.</p>
+    <a href="https://github.com/JohnRogers/MLForge" class="repo-link">View Repository</a>
+
+    <hr>
+
+    <h3>MCP-Gateway</h3>
+    <p>MCP-Gateway is an experimental service. It explores a tool-execution boundary based on JSON-RPC / MCP-style interactions. The intent is to understand what it would take to move tool execution behind a dedicated service boundary rather than embedding it directly in an application.</p>
+    <p>At present, MCP-Gateway is not used by ForgeBreaker. It stands on its own as an exploration of protocol shape, request handling, and execution context modeling. It should be read as a design experiment, not as integrated infrastructure.</p>
+    <p>I built MCP-Gateway to explore what it would take to externalize tool execution, but I deliberately stopped short of integrating it once I realized the complexity tradeoff wasn't justified yet.</p>
+    <a href="https://github.com/JohnRogers/MCP-Gateway" class="repo-link">View Repository</a>
+
+    <hr>
+
+    <h3>LarderLab</h3>
+    <p>LarderLab is the least mature project in the set. It started as a sandbox for experimenting with service interactions and data flow, and it currently does not validate or exercise the other services in a meaningful way. There is no claim that it is production-quality or even complete.</p>
+    <p>If anything, it reflects ideas I was exploring rather than conclusions I've reached.</p>
+    <a href="https://github.com/JohnRogers/LarderLab" class="repo-link">View Repository</a>
+
+    <hr>
+
+    <h2>How to Read This Portfolio</h2>
+    <p>If you're reviewing this as a hiring manager or engineer:</p>
+    <ul>
+        <li>Treat <strong>ForgeBreaker + MLForge</strong> as the core signal.</li>
+        <li>Treat <strong>MCP-Gateway</strong> as a protocol and architecture experiment.</li>
+        <li>Treat <strong>LarderLab</strong> as an unfinished lab space, not a product.</li>
+    </ul>
+    <p>I'm more interested in being precise about what exists than in presenting a perfectly unified story. Some connections are real, some are aspirational, and some are simply ideas I haven't finished testing yet.</p>
+
+    <hr>
+
+    <h2>AI Assistance</h2>
+    <p>This portfolio was developed with assistance from Claude (Anthropic). AI was used for code generation, architectural discussion, documentation drafting, and debugging. I reviewed, edited, and tested all outputs.</p>
+
+    <hr>
+
+    <div class="contact">
+        <h2>Contact</h2>
+        <a href="https://linkedin.com/in/johnrogers">LinkedIn</a>
+        <a href="mailto:rogersjoh@gmail.com">Email</a>
+    </div>
+</body>
+</html>
